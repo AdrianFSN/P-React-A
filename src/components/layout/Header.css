@@ -1,0 +1,48 @@
+.header {
+  position: sticky;
+  background-color: white;
+  align-items: center;
+  display: flex;
+  z-index: 1000;
+}
+
+.header-logo {
+  align-items: center;
+  background-color: transparent;
+  border-radius: 9999px;
+  color: rgba(29, 161, 242, 1);
+  display: inline-flex;
+  height: 70px;
+  justify-content: center;
+  transition: background-color 0.2s;
+  width: 70px;
+}
+
+.header-logo:hover {
+  background-color: rgba(29, 161, 242, 0.1);
+}
+
+.header-nav {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.header-nav .header-nav-item {
+  align-self: center;
+  margin-left: 8px;
+}
+
+.header-nav .active {
+  color: rgba(29, 161, 242, 1);
+}
+
+.header-button {
+  width: 144px;
+  margin-left: 10px;
+}
+
+.header-nav a {
+  text-decoration: none;
+}
