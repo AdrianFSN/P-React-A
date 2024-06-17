@@ -10,7 +10,7 @@ import SelectMenu from "../../components/shared/SelectMenu";
 import Button from "../../components/shared/Button";
 import SliderRange from "../../components/shared/SliderRange";
 import { useDispatch, useSelector } from "react-redux";
-import { adsLoaded } from "../../store/actions";
+import { adsLoaded, loadAdverts } from "../../store/actions";
 import { getListOfAds } from "../../store/selectors";
 
 function AdvertsPage() {
@@ -73,10 +73,14 @@ function AdvertsPage() {
     setFilterByMinPrice(minPriceAvailable);
   };
 
-  useEffect(() => {
+  /*   useEffect(() => {
     getLatestAds().then((adverts) => {
       dispatch(adsLoaded(adverts));
     });
+  }, [dispatch]); */
+
+  useEffect(() => {
+    dispatch(loadAdverts());
   }, [dispatch]);
 
   useEffect(() => {

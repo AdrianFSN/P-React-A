@@ -1,5 +1,6 @@
 import {
   ADS_LOADED,
+  ADS_LOADED_FULFILLED,
   AD_CREATED,
   AUTH_LOGIN_FULFILLED,
   AUTH_LOGIN_PENDING,
@@ -10,7 +11,10 @@ import {
 
 const defaultState = {
   auth: false,
-  ads: [],
+  ads: {
+    loaded: false,
+    data: [],
+  },
   ui: {
     pending: false,
     error: null,
@@ -31,10 +35,10 @@ export function auth(state = defaultState.auth, action) {
 
 export function ads(state = defaultState.ads, action) {
   switch (action.type) {
-    case ADS_LOADED:
-      return action.payload;
+    case ADS_LOADED_FULFILLED:
+      return { ...state, loaded: true, data: action.payload };
     case AD_CREATED:
-      return [action.payload, ...state];
+      return { ...state, data: [action.payload, ...state] };
     default:
       return state;
   }

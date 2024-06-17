@@ -1,3 +1,4 @@
+import { getLatestAds } from "../pages/adverts/service";
 import { login } from "../pages/auth/service";
 import {
   ADS_LOADED,
@@ -46,10 +47,10 @@ export const authLoginRejected = (error) => ({
 });
 
 // actions related to advertisements state
-export const adsLoaded = (ads) => ({
+/* export const adsLoaded = (ads) => ({
   type: ADS_LOADED,
   payload: ads,
-});
+}); */
 
 export const adsLoadedPending = () => ({
   type: ADS_LOADED_PENDING,
@@ -65,6 +66,18 @@ export const adsLoadedRejected = (error) => ({
   payload: error,
   error: true,
 });
+
+export const loadAdverts = () => {
+  return async function (dispatch) {
+    try {
+      dispatch(adsLoadedPending());
+      const adverts = await getLatestAds();
+      dispatch(adsLoadedFulfilled(adverts));
+    } catch (error) {
+      dispatch(adsLoadedRejected(error));
+    }
+  };
+};
 
 export const adCreated = (ad) => ({
   type: AD_CREATED,
