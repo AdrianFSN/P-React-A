@@ -1,7 +1,6 @@
 import { getLatestAds } from "../pages/adverts/service";
 import { login } from "../pages/auth/service";
 import {
-  ADS_LOADED,
   ADS_LOADED_FULFILLED,
   ADS_LOADED_PENDING,
   AD_CREATED,

@@ -1,6 +1,5 @@
 import styles from "./AdvertsPage.module.css";
 import { useEffect, useState } from "react";
-import { getLatestAds } from "./service";
 import { Link } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import Advert from "./components/Advert";
@@ -10,7 +9,7 @@ import SelectMenu from "../../components/shared/SelectMenu";
 import Button from "../../components/shared/Button";
 import SliderRange from "../../components/shared/SliderRange";
 import { useDispatch, useSelector } from "react-redux";
-import { adsLoaded, loadAdverts } from "../../store/actions";
+import { loadAdverts } from "../../store/actions";
 import { getListOfAds } from "../../store/selectors";
 
 function AdvertsPage() {
