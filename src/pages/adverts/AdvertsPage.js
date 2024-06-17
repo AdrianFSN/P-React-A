@@ -9,9 +9,13 @@ import FilterCase from "../../components/shared/FilterCase";
 import SelectMenu from "../../components/shared/SelectMenu";
 import Button from "../../components/shared/Button";
 import SliderRange from "../../components/shared/SliderRange";
+import { useDispatch, useSelector } from "react-redux";
+import { adsLoaded } from "../../store/actions";
+import { getListOfAds } from "../../store/selectors";
 
 function AdvertsPage() {
-  const [adverts, setAdvertsPanel] = useState([]);
+  const dispatch = useDispatch();
+  const adverts = useSelector(getListOfAds);
   const [maxPriceAvailable, setMaxPriceAvailable] = useState(0);
   const [minPriceAvailable, setMinPriceAvailable] = useState(0);
   const [filteredAdverts, setFilteredAdverts] = useState([]);
@@ -70,18 +74,10 @@ function AdvertsPage() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const adverts = await getLatestAds();
-        setAdvertsPanel(adverts);
-        setFilteredAdverts(adverts);
-      } catch (error) {
-        setError(error);
-      }
-    };
-
-    fetchData();
-  }, []);
+    getLatestAds().then((adverts) => {
+      dispatch(adsLoaded(adverts));
+    });
+  }, [dispatch]);
 
   useEffect(() => {
     const filteredAds = adverts.filter((advert) => {
