@@ -1,14 +1,26 @@
-import { ADS_LOADED, AD_CREATED, AUTH_LOGIN, AUTH_LOGOUT } from "./types";
+import {
+  ADS_LOADED,
+  AD_CREATED,
+  AUTH_LOGIN,
+  AUTH_LOGIN_FULFILLED,
+  AUTH_LOGIN_PENDING,
+  AUTH_LOGIN_REJECTED,
+  AUTH_LOGOUT,
+} from "./types";
 
 const defaultState = {
   auth: false,
   ads: [],
+  ui: {
+    pending: false,
+    error: null,
+  },
 };
 
 // auth related reducer
 export function auth(state = defaultState.auth, action) {
   switch (action.type) {
-    case AUTH_LOGIN:
+    case AUTH_LOGIN_FULFILLED:
       return true;
     case AUTH_LOGOUT:
       return false;
@@ -17,12 +29,28 @@ export function auth(state = defaultState.auth, action) {
   }
 }
 
-export function listAds(state = defaultState.ads, action) {
+export function ads(state = defaultState.ads, action) {
   switch (action.type) {
     case ADS_LOADED:
       return action.payload;
     case AD_CREATED:
-      return [...state.ads, action.payload];
+      return [action.payload, ...state];
+    default:
+      return state;
+  }
+}
+
+export function ui(state = defaultState.ui, action) {
+  switch (action.type) {
+    case AUTH_LOGIN_PENDING:
+      return { ...state, pending: true };
+
+    case AUTH_LOGIN_FULFILLED:
+      return { ...state, pending: false, error: null };
+
+    case AUTH_LOGIN_REJECTED:
+      return { ...state, pending: false, error: action.payload };
+
     default:
       return state;
   }

@@ -1,40 +1,34 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { deleteAd, getAdvert } from "./service";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { deleteAd } from "./service";
 import Layout from "../../components/layout/Layout";
 import Advert from "./components/Advert";
 import Button from "../../components/shared/Button";
+import { useSelector } from "react-redux";
+import { getAdDetail } from "../../store/selectors";
+//import { loadAdvert } from "../../store/actions";
 
 function AdvertPage() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const params = useParams();
-  const [advert, setAdvert] = useState(null);
+  //const location = useLocation();
+  // const navigate = useNavigate();
+  //const params = useParams();
+  const { advertId } = useParams();
+  //console.log("Esto es params: ", params);
+  console.log("Esto es advertId: ", advertId);
+  //const [advert, setAdvert] = useState(null);
+  const advert = useSelector((state) => getAdDetail(state, advertId));
+  console.log("Esto es advert: ", advert);
 
   const [error, setError] = useState(null);
 
   const resetError = () => {
     setError(null);
-    const to = location.state?.from || "/";
-    navigate(to, { replace: true });
+    //const to = location.state?.from || "/";
+    //navigate(to, { replace: true });
   };
 
   const [confirmDeletion, setConfirmDeletion] = useState(false);
   const [deletionRequest, setDeletionRequest] = useState(false);
-
-  useEffect(() => {
-    async function getAdvertsFromService() {
-      try {
-        const advert = await getAdvert(params.advertId);
-        setAdvert(advert);
-      } catch (error) {
-        if (error.response.data.statusCode === 404) {
-          navigate("/404");
-        }
-      }
-    }
-    getAdvertsFromService();
-  }, [params.advertId, navigate]);
 
   const showConfirmDeletion = () => {
     setConfirmDeletion(true);
@@ -52,7 +46,7 @@ function AdvertPage() {
   const handleAdDeletion = async () => {
     try {
       await deleteAd(advert.id);
-      navigate("/adverts");
+      //navigate("/adverts");
     } catch (error) {
       setError(error.message);
     }

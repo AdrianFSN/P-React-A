@@ -13,7 +13,6 @@ export default function LoginPage() {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  //const { onLogin } = useAuth();
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",

@@ -4,6 +4,7 @@ import {
   ADS_LOADED_PENDING,
   AD_CREATED,
   AD_CREATED_PENDING,
+  AD_DETAIL,
   AUTH_LOGIN,
   AUTH_LOGIN_FULFILLED,
   AUTH_LOGIN_PENDING,
@@ -69,4 +70,9 @@ export const adCreatedRejected = (error) => ({
   type: AD_CREATED_PENDING,
   payload: error,
   error: true,
+});
+
+export const loadAdvert = (ad) => ({
+  type: AD_DETAIL,
+  payload: ad,
 });

@@ -18,3 +18,5 @@ export const AD_CREATED = "ads/created";
 export const AD_CREATED_PENDING = "ads/created/pending";
 export const AD_CREATED_FULFILLED = "ads/created/fulfilled";
 export const AD_CREATED_REJECTED = "ads/created/rejected";
+
+export const AD_DETAIL = "ads/detail";
