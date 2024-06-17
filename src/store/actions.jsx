@@ -10,6 +10,7 @@ import {
   AUTH_LOGIN_PENDING,
   AUTH_LOGIN_REJECTED,
   AUTH_LOGOUT,
+  UI_RESET_ERROR,
 } from "./types";
 
 // actions related to auth state
@@ -75,4 +76,8 @@ export const adCreatedRejected = (error) => ({
 export const loadAdvert = (ad) => ({
   type: AD_DETAIL,
   payload: ad,
+});
+
+export const uiResetError = () => ({
+  type: UI_RESET_ERROR,
 });

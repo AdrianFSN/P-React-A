@@ -20,3 +20,6 @@ export const AD_CREATED_FULFILLED = "ads/created/fulfilled";
 export const AD_CREATED_REJECTED = "ads/created/rejected";
 
 export const AD_DETAIL = "ads/detail";
+
+//errors related types
+export const UI_RESET_ERROR = "ui/reset-error";

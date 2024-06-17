@@ -6,6 +6,7 @@ import {
   AUTH_LOGIN_PENDING,
   AUTH_LOGIN_REJECTED,
   AUTH_LOGOUT,
+  UI_RESET_ERROR,
 } from "./types";
 
 const defaultState = {
@@ -42,6 +43,9 @@ export function ads(state = defaultState.ads, action) {
 
 export function ui(state = defaultState.ui, action) {
   switch (action.type) {
+    case UI_RESET_ERROR:
+      return { ...state, error: null };
+
     case AUTH_LOGIN_PENDING:
       return { ...state, pending: true };
 

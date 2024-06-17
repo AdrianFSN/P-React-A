@@ -4,9 +4,15 @@ import Button from "../../components/shared/Button";
 import FormField from "../../components/shared/FormField";
 import CheckBox from "../../components/shared/CheckBox";
 import "./LoginPage.css";
-//import { useAuth } from "./context";
-import { authLogin } from "../../store/actions";
-import { useDispatch } from "react-redux";
+import {
+  authLogin,
+  authLoginFulfilled,
+  authLoginPending,
+  authLoginRejected,
+  uiResetError,
+} from "../../store/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { getUi } from "../../store/selectors";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
@@ -17,9 +23,7 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
-
-  const [error, setError] = useState(null);
-  const [isFetching, setIsFetching] = useState(false);
+  const { pending, error } = useSelector(getUi);
 
   const [checkBoxStatus, setCheckBoxStatus] = useState(false);
 
@@ -34,26 +38,25 @@ export default function LoginPage() {
     }));
   };
   const { email, password } = formValues;
-  const buttonDisabled = !email || !password || isFetching;
+  const buttonDisabled = !email || !password || pending;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      setIsFetching(true);
+      dispatch(authLoginPending());
       await login(formValues, checkBoxStatus);
+      dispatch(authLoginFulfilled());
       dispatch(authLogin());
 
       const to = location.state?.from || "/";
       navigate(to, { replace: true });
     } catch (error) {
-      setError(error);
-    } finally {
-      setIsFetching(false);
+      dispatch(authLoginRejected(error));
     }
   };
   const resetError = () => {
-    setError(null);
+    dispatch(uiResetError());
   };
 
   return (
