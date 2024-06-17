@@ -1,3 +1,4 @@
+import { login } from "../pages/auth/service";
 import {
   ADS_LOADED,
   ADS_LOADED_FULFILLED,
@@ -5,7 +6,6 @@ import {
   AD_CREATED,
   AD_CREATED_PENDING,
   AD_DETAIL,
-  AUTH_LOGIN,
   AUTH_LOGIN_FULFILLED,
   AUTH_LOGIN_PENDING,
   AUTH_LOGIN_REJECTED,
@@ -14,9 +14,19 @@ import {
 } from "./types";
 
 // actions related to auth state
-export const authLogin = () => ({
-  type: AUTH_LOGIN,
-});
+export const authLogin = (credentials, storageRequest) => {
+  return async function (dispatch) {
+    try {
+      dispatch(authLoginPending());
+      await login(credentials, storageRequest);
+      dispatch(authLoginFulfilled());
+    } catch (error) {
+      dispatch(authLoginRejected(error));
+      throw error;
+    }
+  };
+};
+
 export const authLogout = () => ({
   type: AUTH_LOGOUT,
 });

@@ -5,9 +5,10 @@ import {
 } from "../../api/client";
 import storage from "../utils/storage";
 
-export const login = (credentials, storageRequest) => {
+export const login = async (credentials, storageRequest) => {
   return client.post("api/auth/login", credentials).then(({ accessToken }) => {
     setAuthorizationHeader(accessToken);
+    console.log("Esto es storageRequest que me llega: ", storageRequest);
     if (storageRequest) {
       storage.set("auth", accessToken);
     }

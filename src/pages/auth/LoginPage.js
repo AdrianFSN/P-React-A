@@ -1,16 +1,9 @@
 import { useState } from "react";
-import { login } from "./service";
 import Button from "../../components/shared/Button";
 import FormField from "../../components/shared/FormField";
 import CheckBox from "../../components/shared/CheckBox";
 import "./LoginPage.css";
-import {
-  authLogin,
-  authLoginFulfilled,
-  authLoginPending,
-  authLoginRejected,
-  uiResetError,
-} from "../../store/actions";
+import { authLogin } from "../../store/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { getUi } from "../../store/selectors";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -27,10 +20,10 @@ export default function LoginPage() {
 
   const [checkBoxStatus, setCheckBoxStatus] = useState(false);
 
-  const handleCheckboxChange = () => {
-    setCheckBoxStatus((prevStatus) => !prevStatus);
+  const handleCheckboxChange = (event) => {
+    setCheckBoxStatus(event.target.checked);
   };
-
+  console.log("Esto es checkboxStatus: ", checkBoxStatus);
   const handleChange = (event) => {
     setFormValues((currentFormValues) => ({
       ...currentFormValues,
@@ -42,21 +35,10 @@ export default function LoginPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    await dispatch(authLogin(formValues, checkBoxStatus));
 
-    try {
-      dispatch(authLoginPending());
-      await login(formValues, checkBoxStatus);
-      dispatch(authLoginFulfilled());
-      dispatch(authLogin());
-
-      const to = location.state?.from || "/";
-      navigate(to, { replace: true });
-    } catch (error) {
-      dispatch(authLoginRejected(error));
-    }
-  };
-  const resetError = () => {
-    dispatch(uiResetError());
+    const to = location.state?.from || "/";
+    navigate(to, { replace: true });
   };
 
   return (
@@ -97,7 +79,7 @@ export default function LoginPage() {
         {error && (
           <div
             className="Nodepop-error"
-            onClick={resetError}
+            /* onClick={resetError} */
           >{`${error}. Click this banner to get back`}</div>
         )}
       </div>
