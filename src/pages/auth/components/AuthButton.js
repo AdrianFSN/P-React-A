@@ -3,9 +3,12 @@ import Button from "../../../components/shared/Button";
 import { useAuth } from "../context";
 import { logout } from "../service";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { getIsLogged } from "../../../store/selectors";
 
 function AuthButton({ className }) {
-  const { isLogged, onLogout } = useAuth();
+  const isLogged = useSelector(getIsLogged);
+  const { onLogout } = useAuth();
   const [error, setError] = useState(null);
   const resetError = () => setError(null);
 
@@ -21,11 +24,19 @@ function AuthButton({ className }) {
   return (
     <>
       {isLogged ? (
-        <Button onClick={handleLogoutClick} className={className}>
+        <Button
+          onClick={handleLogoutClick}
+          className={className}
+        >
           Logout
         </Button>
       ) : (
-        <Button $variant="primary" className={className} as={Link} to="/login">
+        <Button
+          $variant="primary"
+          className={className}
+          as={Link}
+          to="/login"
+        >
           Login
         </Button>
       )}
