@@ -5,8 +5,12 @@ import * as actionCreators from "./actions";
 
 const reducer = combineReducers(reducers);
 
-export default function configureStore() {
-  const store = createStore(reducer, composeWithDevTools({ actionCreators }()));
+export default function configureStore(preloadedState) {
+  const store = createStore(
+    reducer,
+    preloadedState,
+    composeWithDevTools({ actionCreators })()
+  );
 
   return store;
 }

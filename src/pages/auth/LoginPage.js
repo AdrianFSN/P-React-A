@@ -4,13 +4,16 @@ import Button from "../../components/shared/Button";
 import FormField from "../../components/shared/FormField";
 import CheckBox from "../../components/shared/CheckBox";
 import "./LoginPage.css";
-import { useAuth } from "./context";
+//import { useAuth } from "./context";
+import { authLogin } from "../../store/actions";
+import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const { onLogin } = useAuth();
+  //const { onLogin } = useAuth();
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
@@ -40,7 +43,7 @@ export default function LoginPage() {
     try {
       setIsFetching(true);
       await login(formValues, checkBoxStatus);
-      onLogin();
+      dispatch(authLogin());
 
       const to = location.state?.from || "/";
       navigate(to, { replace: true });

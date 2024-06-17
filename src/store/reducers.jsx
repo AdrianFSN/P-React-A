@@ -1,4 +1,3 @@
-import { combineReducers } from "redux";
 import { ADS_LOADED, AD_CREATED, AUTH_LOGIN, AUTH_LOGOUT } from "./types";
 
 const defaultState = {
