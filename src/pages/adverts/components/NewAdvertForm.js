@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { createNewAd } from "../service";
-import { useNavigate } from "react-router-dom";
 import FormField from "../../../components/shared/FormField";
 import CheckBox from "../../../components/shared/CheckBox";
 import Button from "../../../components/shared/Button";
 import SelectMenu from "../../../components/shared/SelectMenu";
 import FileUploadInput from "../../../components/shared/FileInput";
+import { useDispatch } from "react-redux";
+import { createAdvert } from "../../../store/actions";
 
 function NewAdvertForm() {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formValues, setFormValues] = useState({
     name: "",
     sale: true,
@@ -65,14 +65,7 @@ function NewAdvertForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const createdAd = await createNewAd(formValues);
-      navigate(`/adverts/${createdAd.id}`);
-    } catch (error) {
-      if (error.status === 401) {
-        navigate("/login");
-      }
-    }
+    dispatch(createAdvert(formValues));
   };
 
   return (
