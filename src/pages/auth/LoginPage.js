@@ -3,15 +3,12 @@ import Button from "../../components/shared/Button";
 import FormField from "../../components/shared/FormField";
 import CheckBox from "../../components/shared/CheckBox";
 import "./LoginPage.css";
-import { authLogin } from "../../store/actions";
+import { authLogin, uiResetError } from "../../store/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { getUi } from "../../store/selectors";
-import { useLocation, useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const dispatch = useDispatch();
-  const location = useLocation();
-  const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
@@ -23,7 +20,7 @@ export default function LoginPage() {
   const handleCheckboxChange = (event) => {
     setCheckBoxStatus(event.target.checked);
   };
-  console.log("Esto es checkboxStatus: ", checkBoxStatus);
+
   const handleChange = (event) => {
     setFormValues((currentFormValues) => ({
       ...currentFormValues,
@@ -36,9 +33,9 @@ export default function LoginPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     await dispatch(authLogin(formValues, checkBoxStatus));
-
-    const to = location.state?.from || "/";
-    navigate(to, { replace: true });
+  };
+  const resetError = () => {
+    dispatch(uiResetError());
   };
 
   return (
@@ -79,7 +76,7 @@ export default function LoginPage() {
         {error && (
           <div
             className="Nodepop-error"
-            /* onClick={resetError} */
+            onClick={resetError}
           >{`${error}. Click this banner to get back`}</div>
         )}
       </div>
