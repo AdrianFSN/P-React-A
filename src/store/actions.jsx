@@ -1,25 +1,33 @@
-import { getLatestAds } from "../pages/adverts/service";
-import { login } from "../pages/auth/service";
+//import * as advertsService from "../pages/adverts/service";
+//import { getAdvert, getLatestAds } from "../pages/adverts/service";
+//import { login } from "../pages/auth/service";
+import { areAdvertsLoaded, getAdDetail } from "./selectors";
 import {
   ADS_LOADED_FULFILLED,
   ADS_LOADED_PENDING,
-  AD_CREATED,
-  AD_CREATED_PENDING,
-  AD_DETAIL,
+  ADS_CREATED,
+  ADS_CREATED_FULFILLED,
+  ADS_CREATED_PENDING,
+  ADS_CREATED_REJECTED,
   AUTH_LOGIN_FULFILLED,
   AUTH_LOGIN_PENDING,
   AUTH_LOGIN_REJECTED,
   AUTH_LOGOUT,
   UI_RESET_ERROR,
+  ADS_DETAIL_PENDING,
+  ADS_DETAIL_FULFILLED,
+  ADS_DETAIL_REJECTED,
 } from "./types";
 
 // actions related to auth state
 export const authLogin = (credentials, storageRequest) => {
-  return async function (dispatch) {
+  return async function (dispatch, _getState, { services: { auth }, router }) {
     try {
       dispatch(authLoginPending());
-      await login(credentials, storageRequest);
+      await auth.login(credentials, storageRequest);
       dispatch(authLoginFulfilled());
+      const to = router.state.location.state?.from || "/";
+      router.navigate(to, { replace: true });
     } catch (error) {
       dispatch(authLoginRejected(error));
       throw error;
@@ -45,12 +53,6 @@ export const authLoginRejected = (error) => ({
   error: true,
 });
 
-// actions related to advertisements state
-/* export const adsLoaded = (ads) => ({
-  type: ADS_LOADED,
-  payload: ads,
-}); */
-
 export const adsLoadedPending = () => ({
   type: ADS_LOADED_PENDING,
 });
@@ -67,10 +69,15 @@ export const adsLoadedRejected = (error) => ({
 });
 
 export const loadAdverts = () => {
-  return async function (dispatch) {
+  return async function (dispatch, getState, { services }) {
+    const state = getState();
+    if (areAdvertsLoaded(state)) {
+      return;
+    }
+
     try {
       dispatch(adsLoadedPending());
-      const adverts = await getLatestAds();
+      const adverts = await services.ads.getLatestAds();
       dispatch(adsLoadedFulfilled(adverts));
     } catch (error) {
       dispatch(adsLoadedRejected(error));
@@ -78,27 +85,63 @@ export const loadAdverts = () => {
   };
 };
 
-export const adCreated = (ad) => ({
-  type: AD_CREATED,
+export const adsCreated = (ad) => ({
+  type: ADS_CREATED,
   payload: ad,
 });
-export const adCreatedPending = () => ({
-  type: AD_CREATED_PENDING,
+export const adsCreatedPending = () => ({
+  type: ADS_CREATED_PENDING,
 });
-export const adCreatedFulfilled = (ad) => ({
-  type: AD_CREATED_PENDING,
+export const adsCreatedFulfilled = (ad) => ({
+  type: ADS_CREATED_FULFILLED,
   payload: ad,
 });
-export const adCreatedRejected = (error) => ({
-  type: AD_CREATED_PENDING,
+export const adsCreatedRejected = (error) => ({
+  type: ADS_CREATED_REJECTED,
   payload: error,
   error: true,
 });
 
-export const loadAdvert = (ad) => ({
-  type: AD_DETAIL,
+export const adsDetailPending = () => ({
+  type: ADS_DETAIL_PENDING,
+});
+export const adsDetailFulfilled = (ad) => ({
+  type: ADS_DETAIL_FULFILLED,
   payload: ad,
 });
+export const adsDetailRejected = (error) => ({
+  type: ADS_DETAIL_REJECTED,
+  payload: error,
+  error: true,
+});
+
+export const loadAdvert = (advertId) => {
+  return async function (dispatch, getState, { services, router }) {
+    const state = getState();
+    if (getAdDetail(advertId)(state)) {
+      return;
+    }
+    try {
+      dispatch(adsDetailPending);
+      const advert = await services.ads.getAdvert(advertId);
+      dispatch(adsDetailFulfilled(advert));
+      router.navigate(`/adverts/${advert.id}`);
+    } catch (error) {
+      dispatch(adsDetailRejected(error));
+      throw error;
+    }
+  };
+};
+
+export const createAdvert = (advert) => {
+  return async function (dispatch, _getService, { services, router }) {
+    const { id } = await services.ads.createNewAd(advert);
+    const createdAdvert = await services.ads.getAdvert(id);
+    dispatch(adsCreated(createdAdvert));
+    router.navigate(`/adverts/${createdAdvert.id}`);
+    return createdAdvert;
+  };
+};
 
 export const uiResetError = () => ({
   type: UI_RESET_ERROR,

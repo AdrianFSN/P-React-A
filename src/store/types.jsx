@@ -14,12 +14,15 @@ export const ADS_LOADED_PENDING = "ads/loaded/pending";
 export const ADS_LOADED_FULFILLED = "ads/loaded/fulfilled";
 export const ADS_LOADED_REJECTED = "ads/loaded/rejected";
 
-export const AD_CREATED = "ads/created";
-export const AD_CREATED_PENDING = "ads/created/pending";
-export const AD_CREATED_FULFILLED = "ads/created/fulfilled";
-export const AD_CREATED_REJECTED = "ads/created/rejected";
+export const ADS_CREATED = "ads/created";
+export const ADS_CREATED_PENDING = "ads/created/pending";
+export const ADS_CREATED_FULFILLED = "ads/created/fulfilled";
+export const ADS_CREATED_REJECTED = "ads/created/rejected";
 
-export const AD_DETAIL = "ads/detail";
+export const ADS_DETAIL = "ads/detail";
+export const ADS_DETAIL_PENDING = "ads/detail/pending";
+export const ADS_DETAIL_FULFILLED = "ads/detail/fulfilled";
+export const ADS_DETAIL_REJECTED = "ads/detail/rejected";
 
 //errors related types
 export const UI_RESET_ERROR = "ui/reset-error";

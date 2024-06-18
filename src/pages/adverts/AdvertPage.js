@@ -1,30 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { deleteAd } from "./service";
 import Layout from "../../components/layout/Layout";
 import Advert from "./components/Advert";
 import Button from "../../components/shared/Button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAdDetail } from "../../store/selectors";
-//import { loadAdvert } from "../../store/actions";
+import { loadAdvert } from "../../store/actions";
 
 function AdvertPage() {
-  //const location = useLocation();
-  // const navigate = useNavigate();
-  //const params = useParams();
   const { advertId } = useParams();
-  //console.log("Esto es params: ", params);
+
   console.log("Esto es advertId: ", advertId);
-  //const [advert, setAdvert] = useState(null);
+
   const advert = useSelector((state) => getAdDetail(state, advertId));
-  console.log("Esto es advert: ", advert);
+
+  console.log("ESTO ES ADVERT: ", advert);
+
+  const dispatch = useDispatch();
 
   const [error, setError] = useState(null);
 
   const resetError = () => {
     setError(null);
-    //const to = location.state?.from || "/";
-    //navigate(to, { replace: true });
   };
 
   const [confirmDeletion, setConfirmDeletion] = useState(false);
@@ -46,11 +44,14 @@ function AdvertPage() {
   const handleAdDeletion = async () => {
     try {
       await deleteAd(advert.id);
-      //navigate("/adverts");
     } catch (error) {
       setError(error.message);
     }
   };
+
+  useEffect(() => {
+    dispatch(loadAdvert(advertId));
+  }, [advertId, dispatch]);
 
   return (
     <Layout title="Advert info">
