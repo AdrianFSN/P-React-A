@@ -6,6 +6,7 @@ import {
   UI_RESET_ERROR,
   ADS_DETAIL_FULFILLED,
   ADS_CREATED_FULFILLED,
+  ADS_DELETED_FULFILLED,
 } from "./types";
 
 const defaultState = {
@@ -40,6 +41,11 @@ export function ads(state = defaultState.ads, action) {
       return { ...state, data: [action.payload, ...state.data] };
     case ADS_DETAIL_FULFILLED:
       return { ...state, data: [action.payload] };
+    case ADS_DELETED_FULFILLED:
+      return {
+        ...state,
+        data: state.data.filter((ad) => ad.id !== action.payload.id),
+      };
     default:
       return state;
   }

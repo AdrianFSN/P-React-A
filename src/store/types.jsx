@@ -24,5 +24,9 @@ export const ADS_DETAIL_PENDING = "ads/detail/pending";
 export const ADS_DETAIL_FULFILLED = "ads/detail/fulfilled";
 export const ADS_DETAIL_REJECTED = "ads/detail/rejected";
 
+export const ADS_DELETED_PENDING = "ads/deleted/pending";
+export const ADS_DELETED_FULFILLED = "ads/deleted/fulfilled";
+export const ADS_DELETED_REJECTED = "ads/deleted/rejected";
+
 //errors related types
 export const UI_RESET_ERROR = "ui/reset-error";

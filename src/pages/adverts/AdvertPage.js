@@ -6,7 +6,7 @@ import Advert from "./components/Advert";
 import Button from "../../components/shared/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { getAdDetail } from "../../store/selectors";
-import { loadAdvert } from "../../store/actions";
+import { loadAdvert, deleteAdvert } from "../../store/actions";
 
 function AdvertPage() {
   const { advertId } = useParams();
@@ -38,11 +38,7 @@ function AdvertPage() {
   };
 
   const handleAdDeletion = async () => {
-    try {
-      await deleteAd(advert.id);
-    } catch (error) {
-      setError(error.message);
-    }
+    dispatch(deleteAdvert(advert.id));
   };
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 //import * as advertsService from "../pages/adverts/service";
 //import { getAdvert, getLatestAds } from "../pages/adverts/service";
 //import { login } from "../pages/auth/service";
-import { areAdvertsLoaded, getAdDetail } from "./selectors";
+//import { areAdvertsLoaded, getAdDetail } from "./selectors";
 import {
   ADS_LOADED_FULFILLED,
   ADS_LOADED_PENDING,
@@ -17,6 +17,9 @@ import {
   ADS_DETAIL_PENDING,
   ADS_DETAIL_FULFILLED,
   ADS_DETAIL_REJECTED,
+  ADS_DELETED_PENDING,
+  ADS_DELETED_FULFILLED,
+  ADS_DELETED_REJECTED,
 } from "./types";
 
 // actions related to auth state
@@ -111,6 +114,19 @@ export const adsDetailRejected = (error) => ({
   error: true,
 });
 
+export const adsDeletedPending = () => ({
+  type: ADS_DELETED_PENDING,
+});
+export const adsDeletedFulfilled = (advertId) => ({
+  type: ADS_DELETED_FULFILLED,
+  payload: advertId,
+});
+export const adsDeletedRejected = (error) => ({
+  type: ADS_DELETED_REJECTED,
+  payload: error,
+  error: true,
+});
+
 export const loadAdvert = (advertId) => {
   return async function (dispatch, _getState, { services, router }) {
     /* const state = getState();
@@ -130,7 +146,7 @@ export const loadAdvert = (advertId) => {
 };
 
 export const createAdvert = (advert) => {
-  return async function (dispatch, _getService, { services, router }) {
+  return async function (dispatch, _getState, { services, router }) {
     try {
       dispatch(adsCreatedPending());
       const { id } = await services.ads.createNewAd(advert);
@@ -140,6 +156,21 @@ export const createAdvert = (advert) => {
       return createdAdvert;
     } catch (error) {
       dispatch(adsCreatedRejected(error));
+      throw error;
+    }
+  };
+};
+
+export const deleteAdvert = (advertId) => {
+  return async function (dispatch, _getState, { services, router }) {
+    try {
+      dispatch(adsDeletedPending());
+      await services.ads.deleteAd(advertId);
+      dispatch(adsDeletedFulfilled(advertId));
+      router.navigate("/adverts");
+    } catch (error) {
+      dispatch(adsDeletedRejected(error));
+      throw error;
     }
   };
 };
