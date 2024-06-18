@@ -72,12 +72,6 @@ function AdvertsPage() {
     setFilterByMinPrice(minPriceAvailable);
   };
 
-  /*   useEffect(() => {
-    getLatestAds().then((adverts) => {
-      dispatch(adsLoaded(adverts));
-    });
-  }, [dispatch]); */
-
   useEffect(() => {
     dispatch(loadAdverts());
   }, [dispatch]);
@@ -136,7 +130,7 @@ function AdvertsPage() {
       <section>
         {adverts.length ? (
           <ul className={styles.advertsList}>
-            {filteredAdverts.map(({ id, photo, ...advert }) => (
+            {adverts.map(({ id, photo, ...advert }) => (
               <li key={id}>
                 <Link to={`/adverts/${id}`}>
                   <Advert {...advert} />

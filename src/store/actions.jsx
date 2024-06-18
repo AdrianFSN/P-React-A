@@ -5,7 +5,7 @@ import { areAdvertsLoaded, getAdDetail } from "./selectors";
 import {
   ADS_LOADED_FULFILLED,
   ADS_LOADED_PENDING,
-  ADS_CREATED,
+  //ADS_CREATED,
   ADS_CREATED_FULFILLED,
   ADS_CREATED_PENDING,
   ADS_CREATED_REJECTED,
@@ -85,10 +85,6 @@ export const loadAdverts = () => {
   };
 };
 
-export const adsCreated = (ad) => ({
-  type: ADS_CREATED,
-  payload: ad,
-});
 export const adsCreatedPending = () => ({
   type: ADS_CREATED_PENDING,
 });
@@ -135,11 +131,16 @@ export const loadAdvert = (advertId) => {
 
 export const createAdvert = (advert) => {
   return async function (dispatch, _getService, { services, router }) {
-    const { id } = await services.ads.createNewAd(advert);
-    const createdAdvert = await services.ads.getAdvert(id);
-    dispatch(adsCreated(createdAdvert));
-    router.navigate(`/adverts/${createdAdvert.id}`);
-    return createdAdvert;
+    try {
+      dispatch(adsCreatedPending());
+      const { id } = await services.ads.createNewAd(advert);
+      const createdAdvert = await services.ads.getAdvert(id);
+      dispatch(adsCreatedFulfilled(createdAdvert));
+      router.navigate(`/adverts/${createdAdvert.id}`);
+      return createdAdvert;
+    } catch (error) {
+      dispatch(adsCreatedRejected(error));
+    }
   };
 };
 

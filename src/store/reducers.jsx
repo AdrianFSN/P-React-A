@@ -5,6 +5,7 @@ import {
   AUTH_LOGOUT,
   UI_RESET_ERROR,
   ADS_DETAIL_FULFILLED,
+  ADS_CREATED_FULFILLED,
 } from "./types";
 
 const defaultState = {
@@ -35,7 +36,7 @@ export function ads(state = defaultState.ads, action) {
   switch (action.type) {
     case ADS_LOADED_FULFILLED:
       return { ...state, loaded: true, data: action.payload };
-    case ADS_CREATED:
+    case ADS_CREATED_FULFILLED:
       return { ...state, data: [action.payload, ...state.data] };
     case ADS_DETAIL_FULFILLED:
       return { ...state, data: [action.payload] };
