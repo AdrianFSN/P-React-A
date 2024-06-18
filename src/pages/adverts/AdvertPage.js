@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { deleteAd } from "./service";
 import Layout from "../../components/layout/Layout";
 import Advert from "./components/Advert";
 import Button from "../../components/shared/Button";
