@@ -130,7 +130,7 @@ function AdvertsPage() {
       <section>
         {adverts.length ? (
           <ul className={styles.advertsList}>
-            {adverts.map(({ id, photo, ...advert }) => (
+            {filteredAdverts.map(({ id, photo, ...advert }) => (
               <li key={id}>
                 <Link to={`/adverts/${id}`}>
                   <Advert {...advert} />

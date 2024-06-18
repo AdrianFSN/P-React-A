@@ -11,11 +11,7 @@ import { loadAdvert } from "../../store/actions";
 function AdvertPage() {
   const { advertId } = useParams();
 
-  console.log("Esto es advertId: ", advertId);
-
   const advert = useSelector((state) => getAdDetail(state, advertId));
-
-  console.log("ESTO ES ADVERT: ", advert);
 
   const dispatch = useDispatch();
 

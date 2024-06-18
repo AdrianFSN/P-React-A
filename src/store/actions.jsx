@@ -70,10 +70,10 @@ export const adsLoadedRejected = (error) => ({
 
 export const loadAdverts = () => {
   return async function (dispatch, getState, { services }) {
-    const state = getState();
+    /* const state = getState();
     if (areAdvertsLoaded(state)) {
       return;
-    }
+    } */
 
     try {
       dispatch(adsLoadedPending());
@@ -112,11 +112,11 @@ export const adsDetailRejected = (error) => ({
 });
 
 export const loadAdvert = (advertId) => {
-  return async function (dispatch, getState, { services, router }) {
-    const state = getState();
+  return async function (dispatch, _getState, { services, router }) {
+    /* const state = getState();
     if (getAdDetail(advertId)(state)) {
       return;
-    }
+    } */
     try {
       dispatch(adsDetailPending);
       const advert = await services.ads.getAdvert(advertId);

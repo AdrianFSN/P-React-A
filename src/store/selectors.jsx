@@ -7,8 +7,10 @@ export const getListOfAds = (state) => state.ads.data;
   return getListOfAds(state).find((ad) => ad.id === Number(advertId));
 }; */
 
-export const getAdDetail = (state, advertId) =>
-  getListOfAds(state).find((ad) => ad.id === `${advertId}`);
+export const getAdDetail = (state, advertId) => {
+  //getListOfAds(state).find((ad) => ad.id === `${advertId}`);
+  return getListOfAds(state).find((ad) => ad.id === `${advertId}`);
+};
 /* try {
     const listOfAds = getListOfAds(state);
     console.log("Esto es listofAds: ", listOfAds);
