@@ -5,6 +5,7 @@ import * as actionCreators from "./actions";
 import * as auth from "../pages/auth/service";
 import * as ads from "../pages/adverts/service";
 import { withExtraArgument } from "redux-thunk";
+import { failureRedirects } from "./middleware";
 
 const reducer = combineReducers(reducers);
 
@@ -15,7 +16,13 @@ export default function configureStore(preloadedState, { router }) {
     reducer,
     preloadedState,
     composeEnhancers(
-      applyMiddleware(withExtraArgument({ services: { auth, ads }, router }))
+      applyMiddleware(
+        withExtraArgument({ services: { auth, ads }, router }),
+        failureRedirects(router, {
+          401: "/login",
+          404: "/404",
+        })
+      )
     )
   );
 

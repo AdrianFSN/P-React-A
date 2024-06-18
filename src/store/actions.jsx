@@ -33,7 +33,7 @@ export const authLogin = (credentials, storageRequest) => {
       router.navigate(to, { replace: true });
     } catch (error) {
       dispatch(authLoginRejected(error));
-      throw error;
+      //throw error;
     }
   };
 };
@@ -140,7 +140,7 @@ export const loadAdvert = (advertId) => {
       router.navigate(`/adverts/${advert.id}`);
     } catch (error) {
       dispatch(adsDetailRejected(error));
-      throw error;
+      //throw error;
     }
   };
 };
@@ -156,7 +156,7 @@ export const createAdvert = (advert) => {
       return createdAdvert;
     } catch (error) {
       dispatch(adsCreatedRejected(error));
-      throw error;
+      //throw error;
     }
   };
 };
