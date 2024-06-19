@@ -10,6 +10,8 @@ import {
   ADS_CONFIRM_DELETION,
   ADS_CANCEL_DELETION,
   ADS_TAGS_FULFILLED,
+  ADS_MAX_PRICE,
+  ADS_MIN_PRICE,
 } from "./types";
 
 const defaultState = {
@@ -20,6 +22,10 @@ const defaultState = {
     availableTags: [],
     deletionRequest: false,
     confirmDeletion: false,
+    prices: {
+      maxPriceAvailable: 0,
+      minPriceAvailable: 0,
+    },
   },
   ui: {
     pending: false,
@@ -62,6 +68,23 @@ export function ads(state = defaultState.ads, action) {
       return { ...state, confirmDeletion: true };
     case ADS_CANCEL_DELETION:
       return { ...state, deletionRequest: false, confirmDeletion: false };
+    default:
+      return state;
+  }
+}
+
+export function prices(state = defaultState.ads.prices, action) {
+  switch (action.type) {
+    case ADS_MAX_PRICE:
+      return {
+        ...state,
+        maxPriceAvailable: action.payload,
+      };
+    case ADS_MIN_PRICE:
+      return {
+        ...state,
+        minPriceAvailable: action.payload,
+      };
     default:
       return state;
   }

@@ -9,14 +9,25 @@ import SelectMenu from "../../components/shared/SelectMenu";
 import Button from "../../components/shared/Button";
 import SliderRange from "../../components/shared/SliderRange";
 import { useDispatch, useSelector } from "react-redux";
-import { loadAdverts } from "../../store/actions";
-import { getListOfAds } from "../../store/selectors";
+import {
+  calculateMaxMinPricesAvailable,
+  loadAdverts,
+  uiResetError,
+} from "../../store/actions";
+import {
+  getListOfAds,
+  getMaxPrice,
+  getMinPrice,
+  getUi,
+} from "../../store/selectors";
 
 function AdvertsPage() {
   const dispatch = useDispatch();
   const adverts = useSelector(getListOfAds);
-  const [maxPriceAvailable, setMaxPriceAvailable] = useState(0);
-  const [minPriceAvailable, setMinPriceAvailable] = useState(0);
+  const { error } = useSelector(getUi);
+  const maxPriceAvailable = useSelector(getMaxPrice);
+  const minPriceAvailable = useSelector(getMinPrice);
+
   const [filteredAdverts, setFilteredAdverts] = useState([]);
   const [filterByName, setFilterByName] = useState("");
   const [filterByTag, setFilterByTag] = useState([]);
@@ -25,26 +36,18 @@ function AdvertsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const calculateMaxMinPriceAvailable = () => {
-      const prices = adverts.map((advert) => advert.price);
-      setMaxPriceAvailable(Math.max.apply(null, prices));
-      setMinPriceAvailable(Math.min.apply(null, prices));
-      setLoading(false);
-    };
+    dispatch(calculateMaxMinPricesAvailable(adverts));
+    setLoading(false);
 
-    calculateMaxMinPriceAvailable();
-  }, [adverts]);
-
-  useEffect(() => {
     if (!loading) {
       setFilterByMaxPrice(maxPriceAvailable);
       setFilterByMinPrice(minPriceAvailable);
     }
-  }, [loading, maxPriceAvailable, minPriceAvailable]);
+  }, [dispatch, adverts, loading, maxPriceAvailable, minPriceAvailable]);
 
-  const [error, setError] = useState(null);
-
-  const resetError = () => setError(null);
+  const resetError = () => {
+    dispatch(uiResetError());
+  };
 
   const handleFilterByName = (event) => {
     setFilterByName(event.target.value);

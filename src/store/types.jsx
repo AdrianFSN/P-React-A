@@ -35,5 +35,9 @@ export const ADS_REQUEST_DELETION = "ads/requestDeletion";
 export const ADS_TAGS_PENDING = "ads/tags/pending";
 export const ADS_TAGS_FULFILLED = "ads/tags/fulfilled";
 export const ADS_TAGS_REJECTED = "ads/tags/rejected";
+
+export const ADS_MAX_PRICE = "ads/max/price";
+export const ADS_MIN_PRICE = "ads/min/price";
+
 //errors related types
 export const UI_RESET_ERROR = "ui/reset-error";

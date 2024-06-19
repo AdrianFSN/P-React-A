@@ -26,6 +26,8 @@ import {
   ADS_TAGS_PENDING,
   ADS_TAGS_FULFILLED,
   ADS_TAGS_REJECTED,
+  ADS_MAX_PRICE,
+  ADS_MIN_PRICE,
 } from "./types";
 
 // actions related to auth state
@@ -138,6 +140,23 @@ export const adsTagsRejected = (error) => ({
   payload: error,
   error: true,
 });
+
+export const adsMaxPrice = (maxPrice) => ({
+  type: ADS_MAX_PRICE,
+  payload: maxPrice,
+});
+export const adsMinPrice = (minPrice) => ({
+  type: ADS_MIN_PRICE,
+  payload: minPrice,
+});
+
+export const calculateMaxMinPricesAvailable = (advertsList) => (dispatch) => {
+  const prices = advertsList.map((advert) => advert.price);
+  const maxPrice = Math.max(...prices);
+  const minPrice = Math.min(...prices);
+  dispatch(adsMaxPrice(maxPrice));
+  dispatch(adsMinPrice(minPrice));
+};
 
 export const loadAdverts = () => {
   return async function (dispatch, _getState, { services }) {
