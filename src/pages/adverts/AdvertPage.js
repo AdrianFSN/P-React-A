@@ -28,7 +28,7 @@ function AdvertPage() {
     <Layout title="Advert info">
       {advert && (
         <Advert
-          id={advert.id}
+          id={advertId}
           name={advert.name}
           price={advert.price}
           sale={advert.sale}
@@ -37,7 +37,7 @@ function AdvertPage() {
           showImage={true}
         />
       )}
-      <DeleteAdvert advertId={advert.id} />
+      <DeleteAdvert advertId={advertId} />
       {error && (
         <div
           className="Nodepop-error"

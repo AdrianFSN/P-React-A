@@ -184,10 +184,6 @@ export const loadTags = () => {
 
 export const loadAdvert = (advertId) => {
   return async function (dispatch, _getState, { services, router }) {
-    /*     const state = getState();
-    if (getAdDetail(advertId)(state)) {
-      return;
-    } */
     try {
       dispatch(adsDetailPending);
       const advert = await services.ads.getAdvert(advertId);
@@ -195,7 +191,7 @@ export const loadAdvert = (advertId) => {
       router.navigate(`/adverts/${advert.id}`);
     } catch (error) {
       dispatch(adsDetailRejected(error));
-      //throw error;
+      throw error;
     }
   };
 };
