@@ -9,6 +9,7 @@ import {
   ADS_REQUEST_DELETION,
   ADS_CONFIRM_DELETION,
   ADS_CANCEL_DELETION,
+  ADS_TAGS_FULFILLED,
 } from "./types";
 
 const defaultState = {
@@ -16,6 +17,7 @@ const defaultState = {
   ads: {
     loaded: false,
     data: [],
+    availableTags: [],
     deletionRequest: false,
     confirmDeletion: false,
   },
@@ -43,6 +45,8 @@ export function ads(state = defaultState.ads, action) {
       return { ...state, loaded: true, data: action.payload };
     case ADS_CREATED_FULFILLED:
       return { ...state, data: [action.payload, ...state.data] };
+    case ADS_TAGS_FULFILLED:
+      return { ...state, availableTags: action.payload };
     case ADS_DETAIL_FULFILLED:
       return { ...state, data: [action.payload] };
     case ADS_DELETED_FULFILLED:

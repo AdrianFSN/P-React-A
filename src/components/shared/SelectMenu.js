@@ -1,35 +1,38 @@
 import clsx from "clsx";
 import "./SelectMenu.css";
-import { useEffect, useState } from "react";
-import { getTags } from "../../pages/adverts/service";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getListOfTags, getUi } from "../../store/selectors";
+import { loadTags, uiResetError } from "../../store/actions";
 
 const SelectMenu = ({ className, label, optionsArray, ...props }) => {
-  const [availableTags, setAvailableTags] = useState([]);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const availableTags = useSelector(getListOfTags);
+  const { error } = useSelector(getUi);
 
-  const resetError = () => setError(null);
+  const resetError = () => dispatch(uiResetError());
 
   useEffect(() => {
-    if (optionsArray) {
-      setAvailableTags(optionsArray);
-    } else {
-      const getTagsFromApi = async () => {
-        try {
-          const response = await getTags();
-          setAvailableTags(response);
-        } catch (error) {
-          setError(error.message);
-        }
-      };
-      getTagsFromApi();
+    if (!availableTags.length) {
+      dispatch(loadTags());
     }
-  }, [optionsArray]);
+  }, [dispatch, availableTags]);
+
+  if (!availableTags.length) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
-      <select className={clsx("select-menu", className)} {...props}>
+      <select
+        className={clsx("select-menu", className)}
+        {...props}
+      >
         {availableTags.map((item, index) => (
-          <option key={index} value={item}>
+          <option
+            key={index}
+            value={item}
+          >
             {item}
           </option>
         ))}

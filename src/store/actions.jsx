@@ -1,7 +1,7 @@
 //import * as advertsService from "../pages/adverts/service";
 //import { getAdvert, getLatestAds } from "../pages/adverts/service";
 //import { login } from "../pages/auth/service";
-//import { areAdvertsLoaded, getAdDetail } from "./selectors";
+//import { getAdDetail } from "./selectors";
 import {
   ADS_LOADED_FULFILLED,
   ADS_LOADED_PENDING,
@@ -23,6 +23,9 @@ import {
   ADS_REQUEST_DELETION,
   ADS_CONFIRM_DELETION,
   ADS_CANCEL_DELETION,
+  ADS_TAGS_PENDING,
+  ADS_TAGS_FULFILLED,
+  ADS_TAGS_REJECTED,
 } from "./types";
 
 // actions related to auth state
@@ -74,23 +77,6 @@ export const adsLoadedRejected = (error) => ({
   error: true,
 });
 
-export const loadAdverts = () => {
-  return async function (dispatch, getState, { services }) {
-    /* const state = getState();
-    if (areAdvertsLoaded(state)) {
-      return;
-    } */
-
-    try {
-      dispatch(adsLoadedPending());
-      const adverts = await services.ads.getLatestAds();
-      dispatch(adsLoadedFulfilled(adverts));
-    } catch (error) {
-      dispatch(adsLoadedRejected(error));
-    }
-  };
-};
-
 export const adsCreatedPending = () => ({
   type: ADS_CREATED_PENDING,
 });
@@ -140,9 +126,46 @@ export const adsCancelDeletion = () => ({
   type: ADS_CANCEL_DELETION,
 });
 
+export const adsTagsPending = () => ({
+  type: ADS_TAGS_PENDING,
+});
+export const adsTagsFulfilled = (tags) => ({
+  type: ADS_TAGS_FULFILLED,
+  payload: tags,
+});
+export const adsTagsRejected = (error) => ({
+  type: ADS_TAGS_REJECTED,
+  payload: error,
+  error: true,
+});
+
+export const loadAdverts = () => {
+  return async function (dispatch, _getState, { services }) {
+    try {
+      dispatch(adsLoadedPending());
+      const adverts = await services.ads.getLatestAds();
+      dispatch(adsLoadedFulfilled(adverts));
+    } catch (error) {
+      dispatch(adsLoadedRejected(error));
+    }
+  };
+};
+
+export const loadTags = () => {
+  return async function (dispatch, _getState, { services }) {
+    try {
+      dispatch(adsTagsPending());
+      const tags = await services.ads.getTags();
+      dispatch(adsTagsFulfilled(tags));
+    } catch (error) {
+      dispatch(adsTagsRejected(error));
+    }
+  };
+};
+
 export const loadAdvert = (advertId) => {
   return async function (dispatch, _getState, { services, router }) {
-    /* const state = getState();
+    /*     const state = getState();
     if (getAdDetail(advertId)(state)) {
       return;
     } */
