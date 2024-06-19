@@ -2,9 +2,8 @@ import Button from "../../../components/shared/Button";
 import { useDispatch, useSelector } from "react-redux";
 import {
   adsCancelDeletion,
-  adsConfirmDeletion,
-  adsRequestDeletion,
-  deleteAdvert,
+  confirmDeletionProcess,
+  requestDeletionProcess,
   uiResetError,
 } from "../../../store/actions";
 import { getAdsDeletionState, getUi } from "../../../store/selectors";
@@ -15,20 +14,15 @@ export default function DeleteAdvert({ advertId }) {
   const { confirmDeletion, deletionRequest } = useSelector(getAdsDeletionState);
 
   const showConfirmDeletion = () => {
-    dispatch(adsConfirmDeletion());
-  };
-  const requestDeletion = () => {
-    dispatch(adsRequestDeletion());
-    setTimeout(() => {
-      handleAdDeletion();
-    }, 2000);
-  };
-  const cancelDeletion = () => {
-    dispatch(adsCancelDeletion());
+    dispatch(requestDeletionProcess());
   };
 
-  const handleAdDeletion = async () => {
-    dispatch(deleteAdvert(advertId));
+  const requestDeletion = () => {
+    dispatch(confirmDeletionProcess(advertId));
+  };
+
+  const cancelDeletion = () => {
+    dispatch(adsCancelDeletion());
   };
 
   const resetError = () => {

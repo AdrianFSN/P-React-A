@@ -16,8 +16,8 @@ const defaultState = {
   ads: {
     loaded: false,
     data: [],
-    confirmDeletion: false,
     deletionRequest: false,
+    confirmDeletion: false,
   },
   ui: {
     pending: false,
@@ -49,6 +49,8 @@ export function ads(state = defaultState.ads, action) {
       return {
         ...state,
         data: state.data.filter((ad) => ad.id !== action.payload.id),
+        deletionRequest: false,
+        confirmDeletion: false,
       };
     case ADS_REQUEST_DELETION:
       return { ...state, deletionRequest: true };

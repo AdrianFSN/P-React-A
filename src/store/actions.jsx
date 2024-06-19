@@ -174,6 +174,21 @@ export const createAdvert = (advert) => {
   };
 };
 
+export const requestDeletionProcess = () => {
+  return (dispatch) => {
+    dispatch(adsConfirmDeletion());
+  };
+};
+
+export const confirmDeletionProcess = (advertId) => {
+  return async (dispatch) => {
+    dispatch(adsRequestDeletion());
+    setTimeout(async () => {
+      await dispatch(deleteAdvert(advertId));
+    }, 2000);
+  };
+};
+
 export const deleteAdvert = (advertId) => {
   return async function (dispatch, _getState, { services, router }) {
     try {
