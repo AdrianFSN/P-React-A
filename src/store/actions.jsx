@@ -20,6 +20,9 @@ import {
   ADS_DELETED_PENDING,
   ADS_DELETED_FULFILLED,
   ADS_DELETED_REJECTED,
+  ADS_REQUEST_DELETION,
+  ADS_CONFIRM_DELETION,
+  ADS_CANCEL_DELETION,
 } from "./types";
 
 // actions related to auth state
@@ -127,6 +130,16 @@ export const adsDeletedRejected = (error) => ({
   error: true,
 });
 
+export const adsRequestDeletion = () => ({
+  type: ADS_REQUEST_DELETION,
+});
+export const adsConfirmDeletion = () => ({
+  type: ADS_CONFIRM_DELETION,
+});
+export const adsCancelDeletion = () => ({
+  type: ADS_CANCEL_DELETION,
+});
+
 export const loadAdvert = (advertId) => {
   return async function (dispatch, _getState, { services, router }) {
     /* const state = getState();
@@ -170,7 +183,7 @@ export const deleteAdvert = (advertId) => {
       router.navigate("/adverts");
     } catch (error) {
       dispatch(adsDeletedRejected(error));
-      throw error;
+      //throw error;
     }
   };
 };

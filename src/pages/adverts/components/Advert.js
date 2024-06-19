@@ -9,7 +9,7 @@ const Advert = ({ id, name, price, sale, tags, photo, showImage }) => {
           sale ? "offer-type-circle on-sale" : "offer-type-circle on-offer"
         }
       >
-        {sale ? "On sale" : "On offer"}
+        {sale ? "On sale" : "Looking for"}
       </div>
       <ul key={id}>
         {showImage && (

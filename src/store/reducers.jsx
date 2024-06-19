@@ -6,6 +6,9 @@ import {
   ADS_DETAIL_FULFILLED,
   ADS_CREATED_FULFILLED,
   ADS_DELETED_FULFILLED,
+  ADS_REQUEST_DELETION,
+  ADS_CONFIRM_DELETION,
+  ADS_CANCEL_DELETION,
 } from "./types";
 
 const defaultState = {
@@ -13,6 +16,8 @@ const defaultState = {
   ads: {
     loaded: false,
     data: [],
+    confirmDeletion: false,
+    deletionRequest: false,
   },
   ui: {
     pending: false,
@@ -45,6 +50,12 @@ export function ads(state = defaultState.ads, action) {
         ...state,
         data: state.data.filter((ad) => ad.id !== action.payload.id),
       };
+    case ADS_REQUEST_DELETION:
+      return { ...state, deletionRequest: true };
+    case ADS_CONFIRM_DELETION:
+      return { ...state, confirmDeletion: true };
+    case ADS_CANCEL_DELETION:
+      return { ...state, deletionRequest: false, confirmDeletion: false };
     default:
       return state;
   }

@@ -28,5 +28,9 @@ export const ADS_DELETED_PENDING = "ads/deleted/pending";
 export const ADS_DELETED_FULFILLED = "ads/deleted/fulfilled";
 export const ADS_DELETED_REJECTED = "ads/deleted/rejected";
 
+export const ADS_CONFIRM_DELETION = "ads/confirmDeletion";
+export const ADS_CANCEL_DELETION = "ads/cancelDeletion";
+export const ADS_REQUEST_DELETION = "ads/requestDeletion";
+
 //errors related types
 export const UI_RESET_ERROR = "ui/reset-error";
