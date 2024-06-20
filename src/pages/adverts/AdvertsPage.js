@@ -24,7 +24,7 @@ import {
 function AdvertsPage() {
   const dispatch = useDispatch();
   const adverts = useSelector(getListOfAds);
-  //const { error } = useSelector(getUi);
+  const { error } = useSelector(getUi);
   const maxPriceAvailable = useSelector(getMaxPrice);
   const minPriceAvailable = useSelector(getMinPrice);
 
@@ -45,9 +45,9 @@ function AdvertsPage() {
     }
   }, [dispatch, adverts, loading, maxPriceAvailable, minPriceAvailable]);
 
-  /*  const resetError = () => {
+  const resetError = () => {
     dispatch(uiResetError());
-  }; */
+  };
 
   const handleFilterByName = (event) => {
     setFilterByName(event.target.value);
@@ -147,14 +147,14 @@ function AdvertsPage() {
           <EmptyList />
         )}
       </section>
-      {/*       <div>
+      <div>
         {error && (
           <div
             className="Nodepop-error"
             onClick={resetError}
           >{`${error}. Click this banner to get back`}</div>
         )}
-      </div> */}
+      </div>
     </Layout>
   );
 }

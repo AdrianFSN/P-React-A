@@ -14,11 +14,11 @@ function AdvertPage() {
 
   const dispatch = useDispatch();
 
-  /*  const { error } = useSelector(getUi);
+  const { error } = useSelector(getUi);
 
   const resetError = () => {
     dispatch(uiResetError());
-  }; */
+  };
 
   useEffect(() => {
     dispatch(loadAdvert(advertId));
@@ -38,12 +38,12 @@ function AdvertPage() {
         />
       )}
       <DeleteAdvert advertId={advertId} />
-      {/*       {error && (
+      {error && (
         <div
           className="Nodepop-error"
           onClick={resetError}
         >{`${error}. Click this banner to get back`}</div>
-      )} */}
+      )}
     </Layout>
   );
 }

@@ -234,7 +234,6 @@ export const deleteAdvert = (advertId) => {
       router.navigate("/adverts");
     } catch (error) {
       dispatch(adsDeletedRejected(error));
-      //router.navigate("/404");
     }
   };
 };
