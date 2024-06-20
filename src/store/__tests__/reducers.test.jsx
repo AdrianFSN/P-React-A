@@ -15,15 +15,12 @@ describe("auth reducer", () => {
   });
 });
 
-/* describe("ads reducer", () => {
+describe("ads reducer", () => {
   it('should manage "ADS_LOADED_FULFILLED" action', () => {
-    const ads = [
-      { id: 1, title: "Ad 1" },
-      { id: 2, title: "Ad 2" },
-    ];
+    const adsData = ["List of advertisements"];
     const state = defaultState.ads;
-    const action = adsLoadedFulfilled(ads);
-    const expectedResult = { ...state, loaded: true, data: ads };
+    const action = adsLoadedFulfilled(adsData);
+    const expectedResult = { ...state, loaded: true, data: action.payload };
     expect(ads(state, action)).toEqual(expectedResult);
   });
-}); */
+});
