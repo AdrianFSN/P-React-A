@@ -14,7 +14,7 @@ import {
   ADS_MIN_PRICE,
 } from "./types";
 
-const defaultState = {
+export const defaultState = {
   auth: false,
   ads: {
     loaded: false,
