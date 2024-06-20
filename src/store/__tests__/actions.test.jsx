@@ -1,5 +1,6 @@
 import {
   adsLoadedFulfilled,
+  authLogin,
   authLoginFulfilled,
   authLoginPending,
   authLoginRejected,
@@ -61,5 +62,35 @@ describe("adsLoadedFulfilled", () => {
     const testedAction = adsLoadedFulfilled(ads);
 
     expect(testedAction).toEqual(expectedAction);
+  });
+});
+
+// testing asynchronous actions
+describe("authLogin asynchronous action", () => {
+  const credentials = "credentials";
+  const storageRequest = true;
+  const testedAction = authLogin(credentials, storageRequest);
+  const redirectUrl = "/redirectUrl";
+  const dispatch = jest.fn();
+  const services = { auth: {} };
+  const router = {
+    state: { location: { state: { from: redirectUrl } } },
+    navigate: jest.fn(),
+  };
+
+  it("should follow the login flow after resolving login", async () => {
+    services.auth.login = jest.fn().mockResolvedValue();
+
+    await testedAction(dispatch, undefined, { services, router });
+    expect(dispatch).toHaveBeenCalledTimes(2);
+    expect(dispatch).toHaveBeenNthCalledWith(1, authLoginPending());
+    expect(services.auth.login).toHaveBeenCalledWith(
+      credentials,
+      storageRequest
+    );
+    expect(dispatch).toHaveBeenNthCalledWith(2, authLoginFulfilled());
+    expect(router.navigate).toHaveBeenCalledWith(redirectUrl, {
+      replace: true,
+    });
   });
 });
