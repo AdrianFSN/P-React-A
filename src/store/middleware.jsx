@@ -6,7 +6,7 @@ export const failureRedirects =
       return result;
     }
 
-    const redirect = redirectsMap[action.payload.status];
+    const redirect = redirectsMap[action.payload.response.status];
     if (redirect) {
       router.navigate(redirect);
     }

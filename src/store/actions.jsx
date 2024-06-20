@@ -5,7 +5,6 @@
 import {
   ADS_LOADED_FULFILLED,
   ADS_LOADED_PENDING,
-  //ADS_CREATED,
   ADS_CREATED_FULFILLED,
   ADS_CREATED_PENDING,
   ADS_CREATED_REJECTED,
@@ -41,7 +40,6 @@ export const authLogin = (credentials, storageRequest) => {
       router.navigate(to, { replace: true });
     } catch (error) {
       dispatch(authLoginRejected(error));
-      //throw error;
     }
   };
 };
@@ -151,11 +149,13 @@ export const adsMinPrice = (minPrice) => ({
 });
 
 export const calculateMaxMinPricesAvailable = (advertsList) => (dispatch) => {
-  const prices = advertsList.map((advert) => advert.price);
-  const maxPrice = Math.max(...prices);
-  const minPrice = Math.min(...prices);
-  dispatch(adsMaxPrice(maxPrice));
-  dispatch(adsMinPrice(minPrice));
+  if (advertsList.length) {
+    const prices = advertsList.map((advert) => advert.price);
+    const maxPrice = Math.max(...prices);
+    const minPrice = Math.min(...prices);
+    dispatch(adsMaxPrice(maxPrice));
+    dispatch(adsMinPrice(minPrice));
+  }
 };
 
 export const loadAdverts = () => {
@@ -191,7 +191,6 @@ export const loadAdvert = (advertId) => {
       router.navigate(`/adverts/${advert.id}`);
     } catch (error) {
       dispatch(adsDetailRejected(error));
-      throw error;
     }
   };
 };
@@ -207,7 +206,6 @@ export const createAdvert = (advert) => {
       return createdAdvert;
     } catch (error) {
       dispatch(adsCreatedRejected(error));
-      //throw error;
     }
   };
 };
@@ -236,7 +234,7 @@ export const deleteAdvert = (advertId) => {
       router.navigate("/adverts");
     } catch (error) {
       dispatch(adsDeletedRejected(error));
-      //throw error;
+      //router.navigate("/404");
     }
   };
 };

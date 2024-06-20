@@ -20,8 +20,10 @@ const defaultState = {
     loaded: false,
     data: [],
     availableTags: [],
-    deletionRequest: false,
-    confirmDeletion: false,
+    delete: {
+      deletionRequest: false,
+      confirmDeletion: false,
+    },
     prices: {
       maxPriceAvailable: 0,
       minPriceAvailable: 0,

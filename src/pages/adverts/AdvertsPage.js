@@ -24,7 +24,7 @@ import {
 function AdvertsPage() {
   const dispatch = useDispatch();
   const adverts = useSelector(getListOfAds);
-  const { error } = useSelector(getUi);
+  //const { error } = useSelector(getUi);
   const maxPriceAvailable = useSelector(getMaxPrice);
   const minPriceAvailable = useSelector(getMinPrice);
 
@@ -45,9 +45,9 @@ function AdvertsPage() {
     }
   }, [dispatch, adverts, loading, maxPriceAvailable, minPriceAvailable]);
 
-  const resetError = () => {
+  /*  const resetError = () => {
     dispatch(uiResetError());
-  };
+  }; */
 
   const handleFilterByName = (event) => {
     setFilterByName(event.target.value);
@@ -80,21 +80,23 @@ function AdvertsPage() {
   }, [dispatch]);
 
   useEffect(() => {
-    const filteredAds = adverts.filter((advert) => {
-      const resultByName = advert.name
-        .toLowerCase()
-        .includes(filterByName.toLowerCase());
+    if (adverts.length) {
+      const filteredAds = adverts.filter((advert) => {
+        const resultByName = advert.name
+          .toLowerCase()
+          .includes(filterByName.toLowerCase());
 
-      const resultByTag =
-        filterByTag.length === 0 ||
-        filterByTag.every((tag) => advert.tags.includes(tag));
-      const resultByPriceRange =
-        advert.price <= filterByMaxPrice && advert.price >= filterByMinPrice;
+        const resultByTag =
+          filterByTag.length === 0 ||
+          filterByTag.every((tag) => advert.tags.includes(tag));
+        const resultByPriceRange =
+          advert.price <= filterByMaxPrice && advert.price >= filterByMinPrice;
 
-      return resultByName && resultByTag && resultByPriceRange;
-    });
+        return resultByName && resultByTag && resultByPriceRange;
+      });
 
-    setFilteredAdverts(filteredAds);
+      setFilteredAdverts(filteredAds);
+    }
   }, [adverts, filterByName, filterByTag, filterByMaxPrice, filterByMinPrice]);
 
   return (
@@ -145,14 +147,14 @@ function AdvertsPage() {
           <EmptyList />
         )}
       </section>
-      <div>
+      {/*       <div>
         {error && (
           <div
             className="Nodepop-error"
             onClick={resetError}
           >{`${error}. Click this banner to get back`}</div>
         )}
-      </div>
+      </div> */}
     </Layout>
   );
 }
