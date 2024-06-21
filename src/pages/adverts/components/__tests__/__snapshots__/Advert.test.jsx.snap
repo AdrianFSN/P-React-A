@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Advert component should take a snapshot for Advert component 1`] = `
+<div>
+  <section
+    class="single-advert"
+  >
+    <div
+      class="offer-type-circle on-sale"
+    >
+      On sale
+    </div>
+    <ul>
+      <li>
+        <h2>
+          Advert Name
+        </h2>
+      </li>
+      <li>
+        Price: 
+        25
+         €
+      </li>
+      <li>
+        Category: 
+        motor | mobile
+      </li>
+    </ul>
+  </section>
+</div>
+`;
