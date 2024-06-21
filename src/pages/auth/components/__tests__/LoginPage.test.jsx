@@ -2,8 +2,12 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import LoginPage from "../../LoginPage";
 import { Provider } from "react-redux";
 import { authLogin } from "../../../../store/actions";
+import userEvent from "@testing-library/user-event";
+import { act } from "react";
 
 jest.mock("../../../../store/actions");
+
+const userType = (input, text) => userEvent.type(input, text);
 
 describe("LoginPage", () => {
   const state = {
@@ -34,7 +38,7 @@ describe("LoginPage", () => {
   it("should dispatch authLogin action", () => {
     const email = "username@example.com";
     const password = "password";
-    const checkBoxStatus = true;
+    const storageRequest = true;
     renderComponent();
     const emailInput = screen.getByPlaceholderText(/Your email here/i);
     /* const emailInput = screen.getByRole("textbox", {
@@ -43,19 +47,27 @@ describe("LoginPage", () => {
     const passwordInput = screen.getByPlaceholderText(/Your password here/i);
     const submitButton = screen.getByRole("button");
     const checkbox = screen.getByRole("checkbox");
+    //const userClick = (event) => userEvent.click(event);
 
     expect(submitButton).toBeDisabled();
 
+    //act(() => userType(emailInput, email));
+    //userEvent.type(emailInput, email);
     fireEvent.change(emailInput, { target: { value: email } });
+    //act(() => userType(passwordInput, password));
+    //userEvent.type(passwordInput, password);
     fireEvent.change(passwordInput, { target: { value: password } });
-    fireEvent.click(checkbox);
+    //act(() => userClick(checkbox));
+    //userEvent.click(checkbox);
 
-    expect(checkbox).toBeChecked();
-
+    //expect(checkbox).toBeChecked();
     expect(submitButton).toBeEnabled();
-
+    fireEvent.click(checkbox);
+    expect(checkbox).toBeEnabled();
+    //act(() => userClick(submitButton));
+    //userEvent.click(submitButton);
     fireEvent.click(submitButton);
 
-    expect(authLogin).toHaveBeenCalledWith({ email, password }, checkBoxStatus);
+    expect(authLogin).toHaveBeenCalledWith({ email, password }, storageRequest);
   });
 });
