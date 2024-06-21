@@ -2,7 +2,6 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import LoginPage from "../../LoginPage";
 import { Provider } from "react-redux";
 import { authLogin } from "../../../../store/actions";
-import { toBeChecked } from "@testing-library/jest-dom/matchers";
 
 jest.mock("../../../../store/actions");
 

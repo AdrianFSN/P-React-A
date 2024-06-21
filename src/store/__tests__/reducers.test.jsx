@@ -20,7 +20,7 @@ describe("ads reducer", () => {
     const adsData = ["List of advertisements"];
     const state = defaultState.ads;
     const action = adsLoadedFulfilled(adsData);
-    const expectedResult = { ...state, loaded: true, data: action.payload };
+    const expectedResult = { ...state, loaded: true, data: adsData };
     expect(ads(state, action)).toEqual(expectedResult);
   });
 });
