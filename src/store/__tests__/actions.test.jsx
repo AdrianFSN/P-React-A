@@ -1,9 +1,11 @@
 import {
   adsLoadedFulfilled,
+  adsLoadedPending,
   authLogin,
   authLoginFulfilled,
   authLoginPending,
   authLoginRejected,
+  loadAdverts,
 } from "../actions";
 import {
   ADS_LOADED_FULFILLED,
@@ -92,5 +94,20 @@ describe("authLogin asynchronous action", () => {
     expect(router.navigate).toHaveBeenCalledWith(redirectUrl, {
       replace: true,
     });
+  });
+});
+
+describe("loadAdverts asynchronous action", () => {
+  const testedAction = loadAdverts();
+  const dispatch = jest.fn();
+  const services = { ads: { data: [] } };
+
+  it("should follow the get adverts list flow", async () => {
+    services.ads.getLatestAds = jest.fn().mockResolvedValue();
+
+    await testedAction(dispatch, undefined, { services });
+    expect(dispatch).toHaveBeenCalledTimes(2);
+    expect(dispatch).toHaveBeenNthCalledWith(1, adsLoadedPending());
+    expect(dispatch).toHaveBeenNthCalledWith(2, adsLoadedFulfilled());
   });
 });
