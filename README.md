@@ -8,7 +8,7 @@ The task consists in building an application to display ads for items on sale/se
 
 ### Redux Store
 
-Tis information is stored and accesible in a redux store:
+This information is stored and accesible in a redux store:
 
 - Login status
 - Available ads
@@ -25,8 +25,7 @@ Please find the related files under the folder "store", so you can understand ho
 The Redux Store is configured with Redux Dev Tools, to make easier the debugging of the app.
 
 <p>
-<img src="./images-readme/image-13.png" width="4
-500px">
+<img src="./images-readme/image-13.png" width="500px">
 </p>
 
 ### Unit Tests
@@ -60,7 +59,7 @@ Please navigate to the following folders to check the tests:
 - `src/pages/adverts/store/__tests__`:
   - actions.test.jsx
   - reducers.test.jsx
-  - selectors.test.js
+  - selectors.test.jsx
 - `src/pages/adverts/auth/components/__tests__`:
   - LoginPage.test.jsx
   - `__snapshots__ `
@@ -136,7 +135,7 @@ You need to login in order to see these routes.
 Served by the component AdvertsPage. If any, it shows a list of the adverts available at that time. In this screen, the adverts show:
 
 - Name
-- Type of offer: on sale / on search
+- Type of offer: on sale / looking for
 - Price in €
 - Category (tags)
 
