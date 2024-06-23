@@ -25,7 +25,8 @@ Please find the related files under the folder "store", so you can understand ho
 The Redux Store is configured with Redux Dev Tools, to make easier the debugging of the app.
 
 <p>
-<img src="./images-readme/image-13.png" width="400px">
+<img src="./images-readme/image-13.png" width="4
+500px">
 </p>
 
 ### Unit Tests
@@ -72,13 +73,13 @@ Please navigate to the following folders to check the tests:
 #### Tests Coverage All
 
 <p>
-<img src="./images-readme/image-14.png" width="400px">
+<img src="./images-readme/image-14.png" width="500px">
 </p>
 
 #### Tests Coverage All src/store
 
 <p>
-<img src="./images-readme/image-15.png" width="400px">
+<img src="./images-readme/image-15.png" width="500px">
 </p>
 
 ## Backend: Nodepop API
@@ -130,7 +131,7 @@ You need to login in order to see these routes.
 #### /adverts
 
 <p>
-<img src= "./images-readme/image-2.png" width="400px">
+<img src= "./images-readme/image-2.png" width="500px">
 </p>
 Served by the component AdvertsPage. If any, it shows a list of the adverts available at that time. In this screen, the adverts show:
 
@@ -146,7 +147,7 @@ If there are no adverts to show, user will get a call to action with a button to
 There is a place reserved for filters in this screen:
 
 <p>
-<img src="./images-readme/image-1.png" width="400px">
+<img src="./images-readme/image-1.png" width="500px">
 </p>
 - By name: filters by the name of the ad.
 - By category: filters by the tags of the ad. To get a match, the advert needs to have the same tags marked in the select input.
@@ -201,7 +202,7 @@ Deletion:
 This one is served by the component NewAdvertPage. It is a form to submit new adverts.
 
 <p>
-<img src="./images-readme/image-6.png" width="400px>
+<img src="./images-readme/image-6.png" width="500px">
 </p>
 
 All inputs are required except "photo". The sbmit button will stay disabled until the form is fulfilled.
