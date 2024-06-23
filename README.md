@@ -1,8 +1,85 @@
 # Second hand store using React
 
-This is a SPA project for the "React basics" module, as part of the bootcamp "Web Development XVI Edition", by KeepCoding.
+This is a SPA project for the "React advanced" module, as part of the bootcamp "Web Development XVI Edition", by KeepCoding.
 
 The task consists in building an application to display ads for items on sale/search.
+
+## What's new in this version?
+
+### Redux Store
+
+Tis information is stored and accesible in a redux store:
+
+- Login status
+- Available ads
+- Ad's detail
+- Available tags
+- Ads creation
+- Ads deletion
+- Max/Min price calculation
+
+Please find the related files under the folder "store", so you can understand how types, actions, reducers, selectors and the store itself work.
+
+### Redux Dev Tools
+
+The Redux Store is configured with Redux Dev Tools, to make easier the debugging of the app.
+
+<p>
+<img src="./images-readme/image-13.png" width="400px">
+</p>
+
+### Unit Tests
+
+Part of the app is now tested with Jest. There are 5 tests suites available so far, with a total of 17 tests developed and 2 component's snapshots taken.
+
+Please install the latest version of Jest in your dependencies. Specially:
+
+**@testing-library/user-event**: v13.3.0
+
+**UserEffect** method is currently **asynchronous**, and that's how the related tests are managed regarding this feature.
+
+Run:
+
+```sh
+npm run test
+```
+
+**There are unit tests for:**
+
+- Synchronous actions
+- Asynchronous actions
+- Reducers
+- Selectors
+- Components:
+  - Snapshots
+  - Mocked interaction
+
+Please navigate to the following folders to check the tests:
+
+- `src/pages/adverts/store/__tests__`:
+  - actions.test.jsx
+  - reducers.test.jsx
+  - selectors.test.js
+- `src/pages/adverts/auth/components/__tests__`:
+  - LoginPage.test.jsx
+  - `__snapshots__ `
+    - LoginPage.test.jsx.snap
+- `src/pages/adverts/components/__tests__`:
+  - Advert.test.jsx
+  - `__snapshots__`
+    - Advert.test.jsx.snap
+
+#### Tests Coverage All
+
+<p>
+<img src="./images-readme/image-14.png" width="400px">
+</p>
+
+#### Tests Coverage All src/store
+
+<p>
+<img src="./images-readme/image-15.png" width="400px">
+</p>
 
 ## Backend: Nodepop API
 
@@ -40,9 +117,11 @@ Served by the component LoginPage, it is the unique public route in the project.
 
 #### Authorization token
 
-If you wan't to storage your authentication token, click the checkbox in the login form:
+If you wan't to store your authentication token, click the checkbox in the login form:
 
-![alt text](./images-readme/image.png)
+<p>
+<img src="./images-readme/image-0.png" width="300px">
+</p>
 
 ### Protected routes
 
@@ -50,8 +129,9 @@ You need to login in order to see these routes.
 
 #### /adverts
 
-![alt text](./images-readme/image-2.png)
-
+<p>
+<img src= "./images-readme/image-2.png" width="400px">
+</p>
 Served by the component AdvertsPage. If any, it shows a list of the adverts available at that time. In this screen, the adverts show:
 
 - Name
@@ -59,14 +139,15 @@ Served by the component AdvertsPage. If any, it shows a list of the adverts avai
 - Price in €
 - Category (tags)
 
-If there is no advert to show, user will get a call to action with a button to create an advert.
+If there are no adverts to show, user will get a call to action with a button to create an advert.
 
 ##### Filters zone
 
 There is a place reserved for filters in this screen:
 
-![alt text](./images-readme/image-1.png)
-
+<p>
+<img src="./images-readme/image-1.png" width="400px">
+</p>
 - By name: filters by the name of the ad.
 - By category: filters by the tags of the ad. To get a match, the advert needs to have the same tags marked in the select input.
 - By price range: use the slider to set a minimum and maximum range of prices to retrieve the adverts you want.
@@ -79,39 +160,49 @@ By clicking in one of the adverts you will navigate to the advert's detail scree
 
 Here you can see the detail of the advert you want. It is managed by the component AdvertPage.
 
-![alt text](./images-readme/image-4.png)
-
+<p>
+<img src="./images-readme/image-4.png" width="300px">
+</p>
 The advert detail shows:
 
 - Name
 - Price in €
 - Category (tags)
-- Type of offer: on sale / on search
+- Type of offer: on sale / looking for
 - Photo: 300px x 300px
 
 If the advert doesn't have any photo, it will show a default backup image:
 
-![alt text](./images-readme/image-11.png)
-
+<p>
+<img src="./images-readme/image-11.png" width="300px">
+</p>
 ##### Delete advert
 
-The detail of the advcert includes a setup to delete the advert. A confirmation flow is shown before deleting the ad.
+The detail of the advert includes a setup to delete the advert. A confirmation flow is shown before deleting the ad.
 
-![alt text](./images-readme/image-7.png)
+<p>
+<img src="./images-readme/image-7.png" width="250px">
+</p>
 
 Confirmation:
 
-![alt text](./images-readme/image-8.png)
+<p>
+<img src="./images-readme/image-8.png" width="300px">
+</p>
 
-Deletion;
+Deletion:
 
-![alt text](./images-readme/image12.png)
+<p>
+<img src="./images-readme/image-12.png" width="200px">
+</p>
 
 #### /adverts/new
 
 This one is served by the component NewAdvertPage. It is a form to submit new adverts.
 
-![alt text](./images-readme/image-6.png)
+<p>
+<img src="./images-readme/image-6.png" width="400px>
+</p>
 
 All inputs are required except "photo". The sbmit button will stay disabled until the form is fulfilled.
 
